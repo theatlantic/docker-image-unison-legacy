@@ -38,9 +38,10 @@ if [ "$1" == 'supervisord' ]; then
             # on the target container anyway, no matter how our user is name here
             echo "user with uid $UNISON_OWNER_UID already exist"
             existing_user_with_uid=$(awk -F: "/:$UNISON_OWNER_UID:/{print \$1}" /etc/passwd)
-            mkdir -p /home/dockersync
-            usermod --home /home/dockersync --login dockersync $existing_user_with_uid
-            chown -R unison /home/dockersync
+            UNISON_OWNER=`getent passwd "$UNISON_OWNER_UID" | cut -d: -f1`
+            mkdir -p /home/$UNISON_OWNER
+            usermod --home /home/$UNISON_OWNER $UNISON_OWNER
+            chown -R $UNISON_OWNER /home/$UNISON_OWNER
          fi
 
     fi
