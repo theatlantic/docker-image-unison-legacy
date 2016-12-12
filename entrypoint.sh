@@ -39,13 +39,13 @@ if [ "$1" == 'supervisord' ]; then
             echo "user with uid $UNISON_OWNER_UID already exist"
             existing_user_with_uid=$(awk -F: "/:$UNISON_OWNER_UID:/{print \$1}" /etc/passwd)
             mkdir -p /home/dockersync
-            usermod --home /home/dockersync --login unison $existing_user_with_uid
+            usermod --home /home/dockersync --login dockersync $existing_user_with_uid
             chown -R unison /home/dockersync
          fi
 
     fi
-
     export UNISON_OWNER_HOMEDIR=`getent passwd $UNISON_OWNER_UID | cut -f6 -d:`
+    export UNISON_OWNER=`getent passwd "$UNISON_OWNER_UID" | cut -d: -f1`
 
     chown -R $UNISON_OWNER_UID $UNISON_DIR
 
