@@ -3,5 +3,5 @@ services:
   unison:
     build:
       context: .
-    container_name: 'unison-unox'
-    image: 'eugenmayer/unison:unox'
+    container_name: 'unison'
+    image: 'eugenmayer/unison'

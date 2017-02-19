@@ -1,7 +1,7 @@
 ## Usage
 
-This image is the unison-image for [docker-sync](https://github.com/EugenMayer/docker-sync) and published on [eugenmayer/unison-unox](https://hub.docker.com/r/eugenmayer/unison-unox/)
-The credits go to [mickaelperrin](https://github.com/mickaelperrin) - all the work has been done by him.
+This image is the unison-image for [docker-sync](https://github.com/EugenMayer/docker-sync) and published on [eugenmayer/unison](https://hub.docker.com/r/eugenmayer/unison/)
+A lot of credits go to [mickaelperrin](https://github.com/mickaelperrin) - most of the work has been done by him.
 
 ## What does it do ?
 
@@ -12,12 +12,12 @@ exist, it is created/modified on startup.
 
 You can configure how unison runs by using the following ENV variables:
  
- - `UNISON_DIR` specifies the directory created in the container to store the synced files, `/data` by default
- - `UNISON_OWNER_UID` specifies **the ID of the user** on which the unison process run and the owner of the synced files.
+ - `VOLUME` specifies the directory created in the container to store the synced files, `/data` by default
+ - `OWNER_UID` specifies **the ID of the user** on which the unison process run and the owner of the synced files.
  - `MAX_INOTIFY_WATCHES` increases the limit of inotify watches if you need to sync folders with lots of files. 
 
 ## Credits
-- Big thanks at [mickaelperrin](https://github.com/mickaelperrin) for putting hard work into getting unox 'production' ready
+- Big thanks at [mickaelperrin](https://github.com/mickaelperrin) for putting hard work into getting this production ready
 
 ## License
 What the others did, so:
