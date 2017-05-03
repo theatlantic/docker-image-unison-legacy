@@ -44,7 +44,7 @@ if [ "$1" == 'supervisord' ]; then
 	# OWNER should actually be dockersync in all cases the user did not match a system user
 	export OWNER=`getent passwd "$OWNER_UID" | cut -d: -f1`
 
-	chown -R $OWNER_UID $VOLUME
+	#chown -R $OWNER_UID $VOLUME
 
 	# see https://wiki.alpinelinux.org/wiki/Setting_the_timezone
 	if [ -n ${TZ} ] && [ -f /usr/share/zoneinfo/${TZ} ]; then
