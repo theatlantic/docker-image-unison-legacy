@@ -45,8 +45,6 @@ if [ "$1" == 'supervisord' ]; then
 	# OWNER should actually be dockersync in all cases the user did not match a system user
 	export OWNER=`getent passwd "$OWNER_UID" | cut -d: -f1`
 
-	chown -R $OWNER_UID $APP_VOLUME
-
 	# see https://wiki.alpinelinux.org/wiki/Setting_the_timezone
 	if [ -n ${TZ} ] && [ -f /usr/share/zoneinfo/${TZ} ]; then
 		ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
@@ -73,6 +71,15 @@ if [ "$1" == 'supervisord' ]; then
 	################### ################### ###################
 	################### /now unison specific/ ###################
 	################### ################### ###################
+
+	if [ ! -f /unison/initial_sync_finished ]; then
+		echo "doing initial sync with cp"
+		cp -au  $HOST_VOLUME/.  $APP_VOLUME
+		echo "chown file"
+		chown -R $OWNER_UID $APP_VOLUME
+		touch /unison/initial_sync_finished
+	fi
 fi
 
+echo "starting unison"
 exec "$@"
