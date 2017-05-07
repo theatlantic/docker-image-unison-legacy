@@ -30,7 +30,8 @@ RUN mkdir -p /docker-entrypoint.d \
  && chmod +x /entrypoint.sh \
  && mkdir -p /etc/supervisor.conf.d \
  && mkdir /unison \
- && touch /tmp/unison.log
+ && touch /tmp/unison.log \
+ && chmod u=rw,g=rw,o=rw /tmp/unison.log
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY supervisor.daemon.conf /etc/supervisor.conf.d/supervisor.daemon.conf
