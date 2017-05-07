@@ -28,7 +28,7 @@ COPY entrypoint.sh /entrypoint.sh
 
 RUN mkdir -p /docker-entrypoint.d \
  && chmod +x /entrypoint.sh \
- && mkdir -p /etc/supervisor.conf.d
+ && mkdir -p /etc/supervisor.conf.d \
  && mkdir /unison
 
 COPY supervisord.conf /etc/supervisord.conf
