@@ -74,14 +74,7 @@ if [ "$1" == 'supervisord' ]; then
     chown -R $OWNER_UID /unison
     chown $OWNER_UID /tmp/unison.log
 
-	if [ ! -f /unison/initial_sync_finished ]; then
-		echo "doing initial sync with cp"
-		time cp -au  $HOST_VOLUME/.  $APP_VOLUME
-		echo "chown ing file to uid $OWNER_UID"
-		chown -R $OWNER_UID $APP_VOLUME
-		touch /unison/initial_sync_finished
-		echo "initial sync done using cp" >> /tmp/unison.log
-	fi
+	/usr/local/bin/precopy_appsync
 fi
 
 echo "starting unison"

@@ -25,13 +25,15 @@ ENV TZ="Europe/Helsinki" \
     HOME="/root"
 
 COPY entrypoint.sh /entrypoint.sh
+COPY precopy_appsync.sh /usr/local/bin/precopy_appsync
 
 RUN mkdir -p /docker-entrypoint.d \
  && chmod +x /entrypoint.sh \
  && mkdir -p /etc/supervisor.conf.d \
  && mkdir /unison \
  && touch /tmp/unison.log \
- && chmod u=rw,g=rw,o=rw /tmp/unison.log
+ && chmod u=rw,g=rw,o=rw /tmp/unison.log \
+ && chmod +x /usr/local/bin/precopy_appsync
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY supervisor.daemon.conf /etc/supervisor.conf.d/supervisor.daemon.conf
