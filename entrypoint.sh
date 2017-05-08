@@ -77,5 +77,4 @@ if [ "$1" == 'supervisord' ]; then
 	/usr/local/bin/precopy_appsync
 fi
 
-echo "starting unison"
 exec "$@"
