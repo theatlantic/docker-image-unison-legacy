@@ -7,7 +7,7 @@ if [ "$1" == 'supervisord' ]; then
 	################### ################### ###################
 	APP_VOLUME=${APP_VOLUME:-/app_sync}
 	HOST_VOLUME=${HOST_VOLUME:-/host_sync}
-	OWNER_UID=${OWNER_UID:0}
+	OWNER_UID=${OWNER_UID:-0}
 	#GROUP_ID=${GROUP_ID:-1000}
 
 	[ ! -d $APP_VOLUME ] && mkdir -p $APP_VOLUME
@@ -73,8 +73,6 @@ if [ "$1" == 'supervisord' ]; then
 	################### ################### ###################
     chown -R $OWNER_UID /unison
     chown $OWNER_UID /tmp/unison.log
-
-	/usr/local/bin/precopy_appsync
 fi
 
 exec "$@"
