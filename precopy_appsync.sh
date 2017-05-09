@@ -2,7 +2,7 @@
 
 APP_VOLUME=${APP_VOLUME:-/app_sync}
 HOST_VOLUME=${HOST_VOLUME:-/host_sync}
-OWNER_UID=${OWNER_UID:0}
+OWNER_UID=${OWNER_UID:-0}
 
 if [ ! -f /unison/initial_sync_finished ]; then
 	echo "doing initial sync with cp"
