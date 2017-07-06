@@ -5,11 +5,12 @@ if [ "$1" == 'supervisord' ]; then
 	################### ################### ###################
 	################### general core shared ###################
 	################### ################### ###################
-	VOLUME=${VOLUME:-/data}
-	OWNER_UID=${OWNER_UID:0}
+	APP_VOLUME=${APP_VOLUME:-/app_sync}
+	HOST_VOLUME=${HOST_VOLUME:-/host_sync}
+	OWNER_UID=${OWNER_UID:-0}
 	#GROUP_ID=${GROUP_ID:-1000}
 
-	[ ! -d $VOLUME ] && mkdir -p $VOLUME
+	[ ! -d $APP_VOLUME ] && mkdir -p $APP_VOLUME
 
 	# if the user did not set anything particular to use, we use root
 	# since this means, no special user has been created on the target container
@@ -44,8 +45,6 @@ if [ "$1" == 'supervisord' ]; then
 	# OWNER should actually be dockersync in all cases the user did not match a system user
 	export OWNER=`getent passwd "$OWNER_UID" | cut -d: -f1`
 
-	chown -R $OWNER_UID $VOLUME
-
 	# see https://wiki.alpinelinux.org/wiki/Setting_the_timezone
 	if [ -n ${TZ} ] && [ -f /usr/share/zoneinfo/${TZ} ]; then
 		ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime
@@ -72,9 +71,8 @@ if [ "$1" == 'supervisord' ]; then
 	################### ################### ###################
 	################### /now unison specific/ ###################
 	################### ################### ###################
+    chown -R $OWNER_UID /unison
+    chown $OWNER_UID /tmp/unison.log
 fi
 
 exec "$@"
-
-
-
