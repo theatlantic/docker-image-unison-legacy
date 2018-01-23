@@ -73,7 +73,7 @@ if [ "$1" == 'supervisord' ]; then
 	MONIT_INTERVAL=${MONIT_INTERVAL:-5}
 	MONIT_HIGH_CPU_CYCLES=${MONIT_HIGH_CPU_CYCLES:-2}
 
-	sed -i -e "s/MONIT_HIGH_CPU_CYCLES/$MONIT_HIGH_CPU_CYCLES/g" /etc/monitrc
+	sed -i -e "s/{{MONIT_HIGH_CPU_CYCLES}}/$MONIT_HIGH_CPU_CYCLES/g" /etc/monitrc
 
 	export MONIT_ENABLE
 	export MONIT_INTERVAL
