@@ -69,7 +69,7 @@ if [ "$1" == 'supervisord' ]; then
 	# Needs the privilegied docker option
 	[ ! -z $MAX_INOTIFY_WATCHES ] && echo fs.inotify.max_user_watches=$MAX_INOTIFY_WATCHES | tee -a /etc/sysctl.conf && sysctl -p || true
 
-	MONIT_ENABLE=${MONIT_ENABLE:-true}
+	MONIT_ENABLE=${MONIT_ENABLE:-false}
 	MONIT_INTERVAL=${MONIT_INTERVAL:-5}
 	MONIT_HIGH_CPU_CYCLES=${MONIT_HIGH_CPU_CYCLES:-2}
 
