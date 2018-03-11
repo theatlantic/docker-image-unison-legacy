@@ -4,4 +4,4 @@ services:
     build:
       context: .
     container_name: 'unison'
-    image: 'eugenmayer/unison'
+    image: 'eugenmayer/unison:hostsync_0.3'
