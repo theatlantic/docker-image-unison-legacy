@@ -10,7 +10,7 @@ if [ ! -f /unison/initial_sync_finished ]; then
 	time ruby -e '`unison #{ENV["UNISON_ARGS"]} #{ENV["UNISON_SYNC_PREFER"]} #{ENV["UNISON_EXCLUDES"]} -numericids -auto -batch /host_sync /app_sync`'
 	#time cp -au  $HOST_VOLUME/.  $APP_VOLUME
 	echo "chown ing file to uid $OWNER_UID"
-	chown -R $OWNER_UID $APP_VOLUME
+	chown -R ${OWNER_UID} ${APP_VOLUME}
 	touch /unison/initial_sync_finished
 	echo "initial sync done using unison" >> /tmp/unison.log
 else

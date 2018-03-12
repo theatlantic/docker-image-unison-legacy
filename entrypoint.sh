@@ -10,23 +10,23 @@ if [ "$1" == 'supervisord' ]; then
 	OWNER_UID=${OWNER_UID:-0}
 	#GROUP_ID=${GROUP_ID:-1000}
 
-	[ ! -d $APP_VOLUME ] && mkdir -p $APP_VOLUME
+	[ ! -d ${APP_VOLUME} ] && mkdir -p ${APP_VOLUME}
 
 	# if the user did not set anything particular to use, we use root
 	# since this means, no special user has been created on the target container
 	# thus it is most probably root to run the daemon and thats a good default then
-	if [ -z $OWNER_UID ];then
+	if [ -z ${OWNER_UID} ];then
 	   OWNER_UID=0
 	fi
 
 	# if the user with the uid does not exist, create him, otherwise reuse him
-	if ! cut -d: -f3 /etc/passwd | grep -q $OWNER_UID; then
+	if ! cut -d: -f3 /etc/passwd | grep -q ${OWNER_UID}; then
 		echo "no user has uid $OWNER_UID"
 
 		# If user doesn't exist on the system
-		useradd -u $OWNER_UID dockersync -m
+		useradd -u ${OWNER_UID} dockersync -m
 	else
-		if [ $OWNER_UID == 0 ]; then
+		if [ ${OWNER_UID} == 0 ]; then
 			# in case it is root, we need a special treatment
 			echo "user with uid $OWNER_UID already exist and its root"
 		else
@@ -37,11 +37,11 @@ if [ "$1" == 'supervisord' ]; then
 			existing_user_with_uid=$(awk -F: "/:$OWNER_UID:/{print \$1}" /etc/passwd)
 			OWNER=`getent passwd "$OWNER_UID" | cut -d: -f1`
 			mkdir -p /home/$OWNER
-			usermod --home /home/$OWNER $OWNER
-			chown -R $OWNER /home/$OWNER
+			usermod --home /home/${OWNER} $OWNER
+			chown -R $OWNER /home/${OWNER}
 		 fi
 	fi
-	export OWNER_HOMEDIR=`getent passwd $OWNER_UID | cut -f6 -d:`
+	export OWNER_HOMEDIR=`getent passwd ${OWNER_UID} | cut -f6 -d:`
 	# OWNER should actually be dockersync in all cases the user did not match a system user
 	export OWNER=`getent passwd "$OWNER_UID" | cut -d: -f1`
 
@@ -67,7 +67,7 @@ if [ "$1" == 'supervisord' ]; then
 	################### ################### ###################
 	# Increase the maximum watches for inotify for very large repositories to be watched
 	# Needs the privilegied docker option
-	[ ! -z $MAX_INOTIFY_WATCHES ] && echo fs.inotify.max_user_watches=$MAX_INOTIFY_WATCHES | tee -a /etc/sysctl.conf && sysctl -p || true
+	[ ! -z ${MAX_INOTIFY_WATCHES} ] && echo fs.inotify.max_user_watches=${MAX_INOTIFY_WATCHES} | tee -a /etc/sysctl.conf && sysctl -p || true
 
 	MONIT_ENABLE=${MONIT_ENABLE:-false}
 	MONIT_INTERVAL=${MONIT_INTERVAL:-5}
@@ -81,8 +81,8 @@ if [ "$1" == 'supervisord' ]; then
 	################### ################### ###################
 	################### /now unison specific/ ###################
 	################### ################### ###################
-    chown -R $OWNER_UID /unison
-    chown $OWNER_UID /tmp/unison.log
+    chown -R ${OWNER_UID} /unison
+    chown ${OWNER_UID} /tmp/unison.log
 fi
 
 exec "$@"
